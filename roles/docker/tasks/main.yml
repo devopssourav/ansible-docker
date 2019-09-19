@@ -1,0 +1,38 @@
+- name: Create and start a container using Ubuntu Image
+  docker_container:
+    name: devops_sourav_1stcontainer
+    state: started
+    image: ubuntu:16.04
+    command: tail -f /dev/null 
+  tags:
+    - task1 
+
+- name: Download docker image
+  docker_image:
+    name: devopssourav/dockerflask 
+  tags:
+    - task2
+
+- name: Create test volume for docker instance
+  docker_volume:
+    name: test_volume
+  tags:
+    - task3
+
+- name: Mount test volume to container
+  docker_container:
+    name: devops_sourav_1stcontainer
+    state: started
+    image: ubuntu:16.04
+    volumes:
+       - test_volume:/app
+    command: tail -f /dev/null
+  tags:
+    - task4
+
+- name: stop a running container 
+  docker_container:
+    name: devops_sourav_1stcontainer
+    state: stopped
+  tags:
+    - task5
